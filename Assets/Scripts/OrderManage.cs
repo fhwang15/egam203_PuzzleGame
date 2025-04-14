@@ -5,9 +5,11 @@ using System.Collections.Generic;
 
 public class OrderManager : MonoBehaviour
 {
-    public Customer currentCustomer;
     public TextMeshProUGUI feedbackText;
     public IngredientsButton[] ingredientButtons;
+
+    public LevelManager levelManager;
+    public GameObject nextButton;
 
     public Dictionary<string, int> scoreTable = new Dictionary<string, int>()
 {
@@ -16,29 +18,16 @@ public class OrderManager : MonoBehaviour
     {"Spoon", 0}, {"Chopsticks", 5}, {"Straw", 10}
 };
 
-    void Start()
-    {
-        GenerateCustomer();
-        DisplayCustomerInfo();
-    }
-
-    void GenerateCustomer()
-    {
-        currentCustomer = new Customer("Nyarlathotep", "Outer Space", "Want Challenge");
-    }
-
-    void DisplayCustomerInfo()
-    {
-        feedbackText.text = currentCustomer.GetInfo();
-    }
-
     public void CompleteOrder()
     {
-        string result = EvaluateOrder().ToString();
-        feedbackText.text = result;
+        CustomProfile customer = levelManager.GetCurrentCustomer();
+
+        int score = EvaluateOrder(customer);
+        feedbackText.text = "Final Score: " + score;
+        nextButton.SetActive(true);
     }
 
-    int EvaluateOrder()
+    int EvaluateOrder(CustomProfile customer)
     {
         int score = 0;
 

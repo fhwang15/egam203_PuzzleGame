@@ -28,7 +28,6 @@ public class TabButtonManager : MonoBehaviour
 
     void ShowTab(int tabIndex)
     {
-        // 모든 탭 비활성화
         foreach (GameObject panel in panels)
         {
             panel.SetActive(false);

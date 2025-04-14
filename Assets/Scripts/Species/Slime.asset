@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fefd1bbfd52ff1e41aa1253ec3af6dc5, type: 3}
+  m_Name: Slime
+  m_EditorClassIdentifier: 
+  speciesName: Slime
+  PreferredBases:
+  - Liquid
+  - Gas
+  dislikedBases:
+  - Solid
+  PreferredSpices:
+  - None
+  - Mild
+  dislikedSpices:
+  - Hot
+  allowedUtensils:
+  - Straw
+  - Spoon and Fork
+  - Chopsticks
+  utensilEater: 0
+  isShapeshifter: 0

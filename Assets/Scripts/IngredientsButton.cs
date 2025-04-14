@@ -8,53 +8,62 @@ public class IngredientsButton : MonoBehaviour
     private Button button;
     private Image buttonImage;
 
+    public int buttonID;
+
+    public IngredientButtonGroup group; // 연결 필요!
+
     void Start()
     {
         button = GetComponent<Button>();
-        buttonImage = GetComponentInChildren<Image>();
+        buttonImage = GetComponent<Image>();
 
-        if (button == null)
-        {
-            Debug.LogError("Button component not found on " + gameObject.name);
-            return;
-        }
-
-        if (buttonImage == null)
-        {
-            Debug.LogError("Image component not found on " + gameObject.name);
-            return;
-        }
-
-        // 중복 Listener 방지
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(ToggleSelection);
+
+        Debug.Log($"[INIT] {ingredientName} Listener count: {button.onClick.GetPersistentEventCount()}");
+
         isSelected = false;
+        UpdateColor();
     }
 
     void ToggleSelection()
     {
-        isSelected = !isSelected;
+        if (isSelected)
+        {
+            // 내가 이미 선택되어있고, 또 누르면 → 해제
+            isSelected = false;
+            UpdateColor();
+            Debug.Log($"[TOGGLE] {ingredientName} → Deselected");
+        }
+        else
+        {
+            // 다른 거 선택 → 내 선택 상태는 group이 컨트롤하게!
+            Debug.Log($"[TOGGLE] {ingredientName} → Selected");
+            group?.OnButtonSelected(this);
+        }
+    }
+
+    public void ForceDeselect()
+    {
+        isSelected = false;
         UpdateColor();
-        Debug.Log("Button clicked: " + ingredientName + ", Selected: " + isSelected);
     }
 
     void UpdateColor()
     {
         if (buttonImage != null)
         {
-            Color color = isSelected ? Color.green : Color.white;
-            buttonImage.color = color;
-            Debug.Log("Color changed: " + color);
+            buttonImage.color = isSelected ? Color.green : Color.white;
         }
     }
 
-    public bool IsSelected()
+    public void ForceSelect()
     {
-        return isSelected;
+        isSelected = true;
+        UpdateColor();
     }
 
-    public string GetIngredient()
-    {
-        return ingredientName;
-    }
+    public bool IsSelected() => isSelected;
+
+    public string GetIngredient() => ingredientName;
 }
