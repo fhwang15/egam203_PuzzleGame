@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CrawlingVoid
   m_EditorClassIdentifier: 
   speciesName: Void
+  customerPortrait: {fileID: -8564311652617451439, guid: 58aeaa97d0b38474a83a1846acbde108, type: 3}
   PreferredBases: []
   dislikedBases: []
   PreferredSpices: []

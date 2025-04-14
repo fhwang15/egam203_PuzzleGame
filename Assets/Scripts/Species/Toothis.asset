@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Toothis
   m_EditorClassIdentifier: 
   speciesName: Toothis
+  customerPortrait: {fileID: 2282194482853094087, guid: fa5f686422e03564eb3ede0a2ed4f9ef, type: 3}
   PreferredBases:
   - Solid
   dislikedBases:

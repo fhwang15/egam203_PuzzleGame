@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Slime
   m_EditorClassIdentifier: 
   speciesName: Slime
+  customerPortrait: {fileID: -2886950429533793665, guid: 35f00d770700a424699db0baab3502e7, type: 3}
   PreferredBases:
   - Liquid
   - Gas

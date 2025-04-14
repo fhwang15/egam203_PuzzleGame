@@ -10,10 +10,15 @@ public class LevelManager : MonoBehaviour
     public List<SpeciesProfile> level2Species;
     public List<SpeciesProfile> level3Species;
 
+    public List<SpeciesProfile> shapeshifterTargets;
+
     public int currentLevel = 1;
     public TextMeshProUGUI infoText;
 
     private CustomProfile currentCustomer;
+
+    public Image customerImage;
+
 
     void Start()
     {
@@ -23,6 +28,12 @@ public class LevelManager : MonoBehaviour
     public void SpawnRandomCustomer()
     {
         List<SpeciesProfile> speciesList = GetSpeciesListForCurrentLevel();
+
+        if (currentLevel < 3)
+        {
+            speciesList = speciesList.FindAll(s => !s.isShapeshifter);
+        }
+
         if (speciesList == null || speciesList.Count == 0)
         {
             Debug.LogWarning("No species available for this level.");
@@ -30,8 +41,11 @@ public class LevelManager : MonoBehaviour
         }
 
         SpeciesProfile selectedSpecies = speciesList[Random.Range(0, speciesList.Count)];
+
         currentCustomer = new CustomProfile { species = selectedSpecies };
-        currentCustomer.GenerateRandomPreference();
+
+        // 셰이프시프터 흉내낼 대상 리스트 전달
+        currentCustomer.GenerateRandomPreference(shapeshifterTargets);
 
         UpdateCustomerInfoUI();
     }
@@ -49,8 +63,18 @@ public class LevelManager : MonoBehaviour
 
     void UpdateCustomerInfoUI()
     {
-        infoText.text = $"Species: {currentCustomer.species.speciesName}\n" +
-                        $"Mood: {currentCustomer.mood}\n";
+        Sprite imageToShow = currentCustomer.species.customerPortrait;
+        string nameToShow = currentCustomer.species.speciesName;
+
+        if (currentCustomer.species.isShapeshifter && currentCustomer.mimickedSpecies != null)
+        {
+            imageToShow = currentCustomer.mimickedSpecies.customerPortrait;
+            nameToShow = "???";
+        }
+
+        customerImage.sprite = imageToShow;
+
+        infoText.text = $"Species: {nameToShow}\nMood: {currentCustomer.mood}";
     }
 
     public CustomProfile GetCurrentCustomer()

@@ -7,6 +7,8 @@ using System.Collections;
 public class SpeciesProfile : ScriptableObject
 {
     public string speciesName;
+    public Sprite customerPortrait;
+
     public List<string> PreferredBases;
     public List<string> dislikedBases;
     public List<string> PreferredSpices;
